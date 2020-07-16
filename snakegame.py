@@ -3,15 +3,20 @@ import random
 pygame.init()
 pygame.mixer.init()
 
+
+#the following 2 lines are for background sound
 pygame.mixer.music.load('backkkk.mp3')
 pygame.mixer.music.play()
+
 #colors
 white=(255,255,255)
 red=(255,0,0)
 black=(0,0,0)
 
+#initial score
 score=0
 
+#initial variables
 snake_x=45
 snake_y=45
 snake_size=20
@@ -21,6 +26,7 @@ velocity_y=0
 snk_list=[]
 snk_length=1
 
+#initial width and height of canvas
 screen_width=1200
 screen_height=700
 fps=30
@@ -34,7 +40,7 @@ gamewindow=pygame.display.set_mode((screen_width,screen_height))
 pygame.display.set_caption("Snake with Sadik")
 pygame.display.update()
 
-
+#clock for the purpose of time in game
 clock=pygame.time.Clock()
 
 
@@ -48,6 +54,8 @@ font=pygame.font.SysFont(None,55)
 def text_screen(text,color,x,y):
     screen_text=font.render(text,True,color)
     gamewindow.blit(screen_text,[x,y])
+
+#function for plotting snake 
 def plot_snake(gamewindow,color,snk_list,snake_size):
     for x,y in snk_list:
         
@@ -55,8 +63,9 @@ def plot_snake(gamewindow,color,snk_list,snake_size):
     
     
 
-
+#main game loop
 while not exit_game:
+#if the snake hits the border of the canvas or screen
     if game_over:
         gamewindow.fill(white)
         text_screen("Game Over",red,screen_width/2,screen_height/2)
@@ -67,6 +76,7 @@ while not exit_game:
             
                     
     else:
+#the below code is for the movement of the snake
         
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -88,6 +98,7 @@ while not exit_game:
         snake_x=snake_x+velocity_x
         snake_y=snake_y+velocity_y
 
+#this below code is for the score increasing when snake and food comes in contact
         if abs(snake_x-food_x)<15 and abs(snake_y-food_y)<15:
             score=score+1;
            
@@ -104,6 +115,7 @@ while not exit_game:
         head.append(snake_x)
         head.append(snake_y)
         snk_list.append(head)
+#the below lines are for the game over sound track in case when snake hits the border
 
         if snake_x<0 or snake_x>screen_width or snake_y<0 or snake_y>screen_height:
             game_over=True
